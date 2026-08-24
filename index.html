@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café Tech - Início</title>
+    <style>
+        /* Estilos básicos para deixar o layout apresentável */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9; color: #333; }
+        header { background-color: #2c1e16; color: white; padding: 20px; text-align: center; }
+        nav { background-color: #e67e22; padding: 10px; text-align: center; }
+        nav a { color: white; text-decoration: none; margin: 0 15px; font-weight: bold; }
+        nav a:hover { text-decoration: underline; }
+        main { max-width: 800px; margin: 20px auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #2c1e16; color: white; }
+        .api-container { margin-top: 20px; padding: 15px; border: 1px dashed #e67e22; border-radius: 5px; background: #fffdfa; }
+        footer { text-align: center; padding: 15px; background-color: #2c1e16; color: white; margin-top: 30px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>☕ Café Tech</h1>
+        <p>O ponto de encontro de desenvolvedores e amantes de café.</p>
+    </header>
+
+    <nav>
+        <!-- Navegação entre as páginas -->
+        <a href="index.html">Início</a>
+        <a href="sobre.html">Sobre o Projeto</a>
+    </nav>
+
+    <main>
+        <!-- Sessão Principal -->
+        <section>
+            <h2>Bem-vindo à nossa Cafeteria!</h2>
+            <p>Precisa recarregar as energias para fechar aquele ticket ou debugar o código? Nós temos os grãos perfeitos para o seu fluxo de trabalho.</p>
+            
+            <!-- Imagem com atributo alt obrigatório -->
+            <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80" alt="Xícara de café com latte art em cima de uma mesa de madeira rústica" style="width: 100%; border-radius: 8px; margin: 15px 0;">
+        </section>
+
+        <!-- Sessão de Lista -->
+        <section>
+            <h2>Nosso Menu (Top 3)</h2>
+            <ul>
+                <li><strong>Expresso Debug:</strong> Um shot duplo e puro, ideal para manhãs difíceis.</li>
+                <li><strong>Capuccino Front-end:</strong> Bonito, suave e com bastante latte art.</li>
+                <li><strong>Latte Back-end:</strong> Robusto e com uma base sólida de leite para aguentar o tranco.</li>
+            </ul>
+        </section>
+
+        <!-- Sessão de Tabela -->
+        <section>
+            <h2>Horários de Funcionamento</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dia da Semana</th>
+                        <th>Horário</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Segunda a Sexta</td>
+                        <td>07:30 - 21:00</td>
+                    </tr>
+                    <tr>
+                        <td>Sábado</td>
+                        <td>08:00 - 18:00</td>
+                    </tr>
+                    <tr>
+                        <td>Domingo</td>
+                        <td>Fechado (Dia de deploy)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Sessão Interativa (APIs Web) -->
+        <section>
+            <h2>Recursos Interativos (APIs Web)</h2>
+            
+            <!-- API 1: Web Storage -->
+            <div class="api-container">
+                <h3>1. API Web Storage (localStorage)</h3>
+                <p>Qual é o seu nome? Vamos salvar no navegador para lembrarmos de você na próxima visita.</p>
+                <input type="text" id="nomeUser" placeholder="Digite seu nome">
+                <button onclick="salvarNome()">Salvar Nome</button>
+                <p id="saudacaoMensagem" style="font-weight: bold; color: #e67e22;"></p>
+            </div>
+
+            <!-- API 2: Geolocation -->
+            <div class="api-container">
+                <h3>2. API Geolocation</h3>
+                <p>Descubra suas coordenadas atuais para ver se estamos perto de você!</p>
+                <button onclick="obterLocalizacao()">Onde estou agora?</button>
+                <p id="localizacaoMensagem"></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Café Tech. Projeto Acadêmico.</p>
+    </footer>
+
+    <!-- Scripts para as APIs -->
+    <script>
+        // --- API 1: WEB STORAGE ---
+        function salvarNome() {
+            const nome = document.getElementById('nomeUser').value;
+            if(nome) {
+                localStorage.setItem('nomeClienteCafe', nome);
+                mostrarSaudacao();
+            }
+        }
+
+        function mostrarSaudacao() {
+            const nomeSalvo = localStorage.getItem('nomeClienteCafe');
+            if(nomeSalvo) {
+                document.getElementById('saudacaoMensagem').innerText = `☕ Olá, ${nomeSalvo}! Bem-vindo(a) de volta ao Café Tech!`;
+            }
+        }
+        
+        // Executa ao carregar a página
+        mostrarSaudacao();
+
+        // --- API 2: GEOLOCATION ---
+        function obterLocalizacao() {
+            const painelLoc = document.getElementById('localizacaoMensagem');
+            
+            if ("geolocation" in navigator) {
+                painelLoc.innerText = "Buscando localização...";
+                navigator.geolocation.getCurrentPosition(
+                    function(posicao) {
+                        const lat = posicao.coords.latitude.toFixed(4);
+                        const lon = posicao.coords.longitude.toFixed(4);
+                        painelLoc.innerHTML = `📍 <strong>Suas coordenadas:</strong> Latitude: ${lat} | Longitude: ${lon}`;
+                    }, 
+                    function(erro) {
+                        painelLoc.innerText = "⚠️ Erro ao obter localização. Verifique se você deu permissão no navegador.";
+                    }
+                );
+            } else {
+                painelLoc.innerText = "Seu navegador não suporta a API de Geolocalização.";
+            }
+        }
+    </script>
+
+</body>
+</html>
